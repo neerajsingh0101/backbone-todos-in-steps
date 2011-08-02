@@ -31,6 +31,12 @@ $(function(){
 
     initialize: function(){
       this.input = this.$("#new-todo");
+
+      Todos.bind('add', this.addOne, this);
+    },
+
+    addOne: function(){
+      console.log('display the newly added todo item')
     },
 
     newAttributes: function(){
