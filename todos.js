@@ -14,7 +14,9 @@ $(function(){
   });
 
   window.TodoList = Backbone.Collection.extend({
-    model: Todo
+    model: Todo,
+
+    localStorage: new Store("todos")
   });
 
   window.Todos = new TodoList;
