@@ -1,5 +1,24 @@
 $(function(){
 
+
+  window.Todo = Backbone.Model.extend({
+    defaults: {
+      content: "empty todo ..."
+    },
+
+    initialize: function(){
+      if (!this.get('content')){
+        this.set({"content": this.defaults.content});
+      }
+    }
+  });
+
+  window.TodoList = Backbone.Collection.extend({
+    model: Todo
+  });
+
+  window.Todos = new TodoList;
+
   window.AppView = Backbone.View.extend({
     el: $("#todoapp"),
 
@@ -12,9 +31,15 @@ $(function(){
       this.input = this.$("#new-todo");
     },
 
+    newAttributes: function(){
+      return {
+        content: this.input.val()
+      }
+    },
+
     createOnEnter: function(e) {
       if (e.keyCode != 13) return;
-      console.log("add functionality to save the todo item");
+      Todos.create(this.newAttributes());
       this.input.val('');
     },
 
