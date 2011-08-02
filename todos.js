@@ -4,11 +4,18 @@ $(function(){
     el: $("#todoapp"),
 
     events: {
+      "keypress #new-todo": "createOnEnter",
       "keyup #new-todo": "showTooltip"
     },
 
     initialize: function(){
       this.input = this.$("#new-todo");
+    },
+
+    createOnEnter: function(e) {
+      if (e.keyCode != 13) return;
+      console.log("add functionality to save the todo item");
+      this.input.val('');
     },
 
     showTooltip: function(e) {
