@@ -21,6 +21,21 @@ $(function(){
 
   window.Todos = new TodoList;
 
+  window.TodoView = Backbone.View.extend({
+    template: _.template($('#item-template').html()),
+
+    render: function(){
+      $(this.el).html(this.template(this.model.toJSON()));
+      this.setContent();
+      return this;
+    },
+
+    setContent: function(){
+      var content = this.model.get('content');
+      this.$('.todo-content').text(content);
+    }
+  });
+
   window.AppView = Backbone.View.extend({
     el: $("#todoapp"),
 
@@ -35,8 +50,9 @@ $(function(){
       Todos.bind('add', this.addOne, this);
     },
 
-    addOne: function(){
-      console.log('display the newly added todo item')
+    addOne: function(todo){
+      var view = new TodoView({model: todo});
+      this.$('#todo-list').append(view.render().el);
     },
 
     newAttributes: function(){
