@@ -28,7 +28,8 @@ $(function(){
 
     events: {
       "dblclick div.todo-content": "edit",
-      "click span.todo-destroy": "clear"
+      "click span.todo-destroy": "clear",
+      "keypress .todo-input": "updateOnEnter"
     },
 
     initialize: function(){
@@ -59,6 +60,10 @@ $(function(){
     close: function(){
       this.model.save({content: this.input.val()});
       $(this.el).removeClass('editing');
+    },
+
+    updateOnEnter: function(e){
+      if (e.keyCode == 13) this.close();
     },
 
     remove: function(){
