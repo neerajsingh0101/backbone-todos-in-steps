@@ -48,11 +48,18 @@ $(function(){
       this.input = this.$("#new-todo");
 
       Todos.bind('add', this.addOne, this);
+      Todos.bind('reset', this.addAll, this);
+
+      Todos.fetch();
     },
 
     addOne: function(todo){
       var view = new TodoView({model: todo});
       this.$('#todo-list').append(view.render().el);
+    },
+
+    addAll: function(){
+      Todos.each(this.addOne);
     },
 
     newAttributes: function(){
