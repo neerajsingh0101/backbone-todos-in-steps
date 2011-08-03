@@ -78,6 +78,8 @@ $(function(){
   window.AppView = Backbone.View.extend({
     el: $("#todoapp"),
 
+    statsTemplate: _.template($('#stats-template').html()),
+
     events: {
       "keypress #new-todo": "createOnEnter",
       "keyup #new-todo": "showTooltip"
@@ -88,8 +90,13 @@ $(function(){
 
       Todos.bind('add', this.addOne, this);
       Todos.bind('reset', this.addAll, this);
+      Todos.bind('all', this.render, this);
 
       Todos.fetch();
+    },
+
+    render: function(){
+      this.$('#todo-stats').html(this.statsTemplate({remaining: Todos.length}));
     },
 
     addOne: function(todo){
