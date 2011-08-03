@@ -3,20 +3,33 @@ $(function(){
 
   window.Todo = Backbone.Model.extend({
     defaults: {
-      content: "empty todo ..."
+      content: "empty todo ...",
+      done: false
     },
 
     initialize: function(){
       if (!this.get('content')){
         this.set({"content": this.defaults.content});
       }
+    },
+
+    toggle: function(){
+      this.save({done: !this.get('done')});
     }
   });
 
   window.TodoList = Backbone.Collection.extend({
     model: Todo,
 
-    localStorage: new Store("todos")
+    localStorage: new Store("todos"),
+
+    done: function(){
+      return this.filter(function(todo){ return todo.get('done'); });
+    },
+
+    remaining: function(){
+      return this.without.apply(this, this.done());
+    }
   });
 
   window.Todos = new TodoList;
@@ -27,6 +40,7 @@ $(function(){
     template: _.template($('#item-template').html()),
 
     events: {
+      "click .check": "toggleDone",
       "dblclick div.todo-content": "edit",
       "click span.todo-destroy": "clear",
       "keypress .todo-input": "updateOnEnter"
@@ -50,6 +64,10 @@ $(function(){
       this.input = this.$('.todo-input');
       this.input.bind('blur', _.bind(this.close, this));
       this.input.val(content);
+    },
+
+    toggleDone: function(){
+      this.model.toggle();
     },
 
     edit: function(){
@@ -97,8 +115,9 @@ $(function(){
 
     render: function(){
       this.$('#todo-stats').html(this.statsTemplate({
-        remaining: Todos.length,
-        total: Todos.length
+        remaining: Todos.remaining().length,
+        total: Todos.length,
+        done: Todos.done().length
       }));
     },
 
@@ -113,7 +132,8 @@ $(function(){
 
     newAttributes: function(){
       return {
-        content: this.input.val()
+        content: this.input.val(),
+        done: false
       }
     },
 

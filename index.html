@@ -38,9 +38,9 @@
     </div>
 
     <script type="text/template" id="item-template">
-      <div>
+      <div class="todo <%= done ? 'done' : '' %>">
         <div class="display">
-          <input class="check" type="checkbox" />
+          <input class="check" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
           <div class="todo-content"></div>
           <span class="todo-destroy"></span>
         </div>
