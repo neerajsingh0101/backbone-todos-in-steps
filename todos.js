@@ -26,6 +26,15 @@ $(function(){
 
     template: _.template($('#item-template').html()),
 
+    events: {
+      "click span.todo-destroy": "clear"
+    },
+
+    initialize: function(){
+      this.model.view = this;
+      this.model.bind('destroy', this.remove, this);
+    },
+
     render: function(){
       $(this.el).html(this.template(this.model.toJSON()));
       this.setContent();
@@ -35,6 +44,14 @@ $(function(){
     setContent: function(){
       var content = this.model.get('content');
       this.$('.todo-content').text(content);
+    },
+
+    remove: function(){
+      $(this.el).remove();
+    },
+
+    clear: function(){
+      this.model.destroy();
     }
   });
 
