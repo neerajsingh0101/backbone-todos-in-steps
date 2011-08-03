@@ -100,7 +100,8 @@ $(function(){
 
     events: {
       "keypress #new-todo": "createOnEnter",
-      "keyup #new-todo": "showTooltip"
+      "keyup #new-todo": "showTooltip",
+      "click .todo-clear a": "clearCompleted"
     },
 
     initialize: function(){
@@ -141,6 +142,11 @@ $(function(){
       if (e.keyCode != 13) return;
       Todos.create(this.newAttributes());
       this.input.val('');
+    },
+
+    clearCompleted: function(){
+      _.each(Todos.done(), function(todo){ todo.destroy(); });
+      return false;
     },
 
     showTooltip: function(e) {
