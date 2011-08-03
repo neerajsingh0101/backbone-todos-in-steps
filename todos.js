@@ -96,7 +96,10 @@ $(function(){
     },
 
     render: function(){
-      this.$('#todo-stats').html(this.statsTemplate({remaining: Todos.length}));
+      this.$('#todo-stats').html(this.statsTemplate({
+        remaining: Todos.length,
+        total: Todos.length
+      }));
     },
 
     addOne: function(todo){

@@ -51,10 +51,12 @@
     </script>
 
     <script type="text/template" id="stats-template">
-      <span class="todo-count">
-        <span class="number"><%= remaining %></span>
-        <span class="word"><%= remaining == 1 ? 'item' : 'items' %></span> left .
-      </span>
+      <% if (total) { %>
+        <span class="todo-count">
+          <span class="number"><%= remaining %></span>
+          <span class="word"><%= remaining == 1 ? 'item' : 'items' %></span> left .
+        </span>
+      <% } %>
     </script>
 
   </body>
