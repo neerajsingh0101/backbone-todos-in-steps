@@ -27,11 +27,13 @@ $(function(){
     template: _.template($('#item-template').html()),
 
     events: {
+      "dblclick div.todo-content": "edit",
       "click span.todo-destroy": "clear"
     },
 
     initialize: function(){
       this.model.view = this;
+      this.model.bind("change", this.render, this);
       this.model.bind('destroy', this.remove, this);
     },
 
@@ -44,6 +46,19 @@ $(function(){
     setContent: function(){
       var content = this.model.get('content');
       this.$('.todo-content').text(content);
+      this.input = this.$('.todo-input');
+      this.input.bind('blur', _.bind(this.close, this));
+      this.input.val(content);
+    },
+
+    edit: function(){
+      $(this.el).addClass('editing');
+      this.input.focus();
+    },
+
+    close: function(){
+      this.model.save({content: this.input.val()});
+      $(this.el).removeClass('editing');
     },
 
     remove: function(){
