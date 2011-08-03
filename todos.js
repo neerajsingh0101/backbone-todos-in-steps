@@ -22,6 +22,8 @@ $(function(){
   window.Todos = new TodoList;
 
   window.TodoView = Backbone.View.extend({
+    tagName: 'li',
+
     template: _.template($('#item-template').html()),
 
     render: function(){
