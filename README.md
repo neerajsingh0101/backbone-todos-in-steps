@@ -1,8 +1,8 @@
-== Introduction
+## Introduction
 
  [http://backbone-todos-in-steps.bigbinary.com](http://backbone-todos-in-steps.bigbinary.com)
 
-== Code diff
+## Code diff
 
 [step2](https://github.com/neerajdotname/backbone-todos-in-steps/compare/step1...step2)
 
